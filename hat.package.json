@@ -1,0 +1,663 @@
+{
+  "schema": "hathq://hat/package/v2",
+  "package_id": "hat/github-operator",
+  "repository_id": "hat-github-operator",
+  "version": "1.2.0",
+  "specification_version": "1.0.0",
+  "manifest": {
+    "schema": "hathq://hat/manifest/v1",
+    "id": "hat/github-operator",
+    "name": "GitHub Operator",
+    "version": "1.2.0",
+    "capabilities": [
+      "github-private-publication",
+      "github-work-item-creation",
+      "github-workflow-dispatch",
+      "github-private-repository-administration"
+    ],
+    "decision_boundaries": [
+      "execute-exact-github-grant"
+    ],
+    "input_classifications": [
+      "internal",
+      "internal-confidential"
+    ],
+    "output_classification": "internal",
+    "permissions": [
+      {
+        "resource": "github-private-repository",
+        "operations": [
+          "create-private-resource"
+        ],
+        "mode": "execute"
+      },
+      {
+        "resource": "github-repository-content",
+        "operations": [
+          "publish-artifact"
+        ],
+        "mode": "execute"
+      },
+      {
+        "resource": "github-issue-creation",
+        "operations": [
+          "create-work-item"
+        ],
+        "mode": "execute"
+      },
+      {
+        "resource": "github-pull-request-creation",
+        "operations": [
+          "create-review-request"
+        ],
+        "mode": "execute"
+      },
+      {
+        "resource": "github-workflow",
+        "operations": [
+          "dispatch-operation"
+        ],
+        "mode": "execute"
+      },
+      {
+        "resource": "github-repository-administration",
+        "operations": [
+          "delete-resource"
+        ],
+        "mode": "execute"
+      }
+    ]
+  },
+  "information_surfaces": [
+    {
+      "id": "github-repositories",
+      "canonical_type": "domain.software.repository",
+      "projection_schema": "hathq://hat-github-operator/repository/v1",
+      "data_domain_term_id": "hathq://vocabulary/data-domain/software-web/v1",
+      "subject_relation": "managed",
+      "semantic_icon": "repository"
+    }
+  ],
+  "setup_templates": [
+    {
+      "id": "github-connection",
+      "title": "GitHubとの接続を設定する",
+      "summary": "GitHub Appの対象organization、repository、許可する操作を確認し、Crowsiが保管するopaqueなconnection_refをこのHATへ結びます。秘密値はHATへ渡しません。",
+      "action_label": "GitHub接続を設定",
+      "context_namespace": "github-connection",
+      "projection_schema": "hathq://hat-github-operator/connection/v1"
+    }
+  ],
+  "communication_capabilities": [
+    {
+      "schema": "hathq://hat/communication-capability/v1",
+      "id": "zixcel-github-api",
+      "protocol": {
+        "owner_id": "zixcel-github",
+        "protocol_id": "zixcel://github/api-request/v1",
+        "version": 1,
+        "specification_ref": "zixcel://github/api-request/v1"
+      },
+      "role": "client",
+      "direction": "bidirectional",
+      "operation_ids": [
+        "hathq://vocabulary/action/create-private-github-repository/v1",
+        "hathq://vocabulary/action/push-github-repository-snapshot/v1",
+        "hathq://vocabulary/action/create-github-issue/v1",
+        "hathq://vocabulary/action/create-github-pull-request/v1",
+        "hathq://vocabulary/action/dispatch-github-workflow/v1",
+        "hathq://vocabulary/action/delete-github-repository/v1"
+      ]
+    }
+  ],
+  "operations": [
+    {
+      "id": "hathq://vocabulary/action/create-private-github-repository/v1",
+      "input_schema": "hathq://hat-github-operator/action-request/v1",
+      "output_schema": "hathq://hat-github-operator/action-receipt/v1",
+      "context_plan": {
+        "id": "create-private-repository-context",
+        "selectors": [
+          {
+            "namespace": "github-connection",
+            "projection_schema": "hathq://hat-github-operator/connection/v1",
+            "required": true
+          }
+        ],
+        "unresolved_policy": "record-unresolved"
+      },
+      "reducer": {
+        "id": "create-private-repository-reducer",
+        "strategy": "typed-domain-event",
+        "event_schema": "hathq://hat-github-operator/action-event/v1",
+        "projection_schema": "hathq://hat-github-operator/action-receipt/v1",
+        "conflict_policy": "reject"
+      },
+      "procedure": {
+        "id": "create-private-repository-procedure",
+        "steps": [
+          {
+            "action_id": "hathq://vocabulary/action/create-private-github-repository/v1",
+            "input_schema": "hathq://hat-github-operator/action-request/v1",
+            "output_schema": "hathq://hat-github-operator/action-receipt/v1"
+          }
+        ]
+      },
+      "handler": {
+        "kind": "hat-service",
+        "reference": "hat-github-operator"
+      },
+      "effects": [
+        {
+          "kind": "create",
+          "surface_id": "github-repositories"
+        }
+      ]
+    },
+    {
+      "id": "hathq://vocabulary/action/push-github-repository-snapshot/v1",
+      "input_schema": "hathq://hat-github-operator/action-request/v1",
+      "output_schema": "hathq://hat-github-operator/action-receipt/v1",
+      "context_plan": {
+        "id": "push-repository-snapshot-context",
+        "selectors": [
+          {
+            "namespace": "source-snapshot",
+            "projection_schema": "hathq://hat-github-operator/source-snapshot-reference/v1",
+            "required": true
+          }
+        ],
+        "unresolved_policy": "record-unresolved"
+      },
+      "reducer": {
+        "id": "push-repository-snapshot-reducer",
+        "strategy": "typed-domain-event",
+        "event_schema": "hathq://hat-github-operator/action-event/v1",
+        "projection_schema": "hathq://hat-github-operator/action-receipt/v1",
+        "conflict_policy": "reject"
+      },
+      "procedure": {
+        "id": "push-repository-snapshot-procedure",
+        "steps": [
+          {
+            "action_id": "hathq://vocabulary/action/push-github-repository-snapshot/v1",
+            "input_schema": "hathq://hat-github-operator/action-request/v1",
+            "output_schema": "hathq://hat-github-operator/action-receipt/v1"
+          }
+        ]
+      },
+      "handler": {
+        "kind": "hat-service",
+        "reference": "hat-github-operator"
+      },
+      "effects": [
+        {
+          "kind": "update",
+          "surface_id": "github-repositories"
+        }
+      ]
+    },
+    {
+      "id": "hathq://vocabulary/action/create-github-issue/v1",
+      "input_schema": "hathq://hat-github-operator/action-request/v1",
+      "output_schema": "hathq://hat-github-operator/action-receipt/v1",
+      "context_plan": {
+        "id": "create-github-issue-context",
+        "selectors": [
+          {
+            "namespace": "github-connection",
+            "projection_schema": "hathq://hat-github-operator/connection/v1",
+            "required": true
+          }
+        ],
+        "unresolved_policy": "record-unresolved"
+      },
+      "reducer": {
+        "id": "create-github-issue-reducer",
+        "strategy": "typed-domain-event",
+        "event_schema": "hathq://hat-github-operator/action-event/v1",
+        "projection_schema": "hathq://hat-github-operator/action-receipt/v1",
+        "conflict_policy": "reject"
+      },
+      "procedure": {
+        "id": "create-github-issue-procedure",
+        "steps": [
+          {
+            "action_id": "hathq://vocabulary/action/create-github-issue/v1",
+            "input_schema": "hathq://hat-github-operator/action-request/v1",
+            "output_schema": "hathq://hat-github-operator/action-receipt/v1"
+          }
+        ]
+      },
+      "handler": {
+        "kind": "hat-service",
+        "reference": "hat-github-operator"
+      }
+    },
+    {
+      "id": "hathq://vocabulary/action/create-github-pull-request/v1",
+      "input_schema": "hathq://hat-github-operator/action-request/v1",
+      "output_schema": "hathq://hat-github-operator/action-receipt/v1",
+      "context_plan": {
+        "id": "create-github-pull-request-context",
+        "selectors": [
+          {
+            "namespace": "github-connection",
+            "projection_schema": "hathq://hat-github-operator/connection/v1",
+            "required": true
+          }
+        ],
+        "unresolved_policy": "record-unresolved"
+      },
+      "reducer": {
+        "id": "create-github-pull-request-reducer",
+        "strategy": "typed-domain-event",
+        "event_schema": "hathq://hat-github-operator/action-event/v1",
+        "projection_schema": "hathq://hat-github-operator/action-receipt/v1",
+        "conflict_policy": "reject"
+      },
+      "procedure": {
+        "id": "create-github-pull-request-procedure",
+        "steps": [
+          {
+            "action_id": "hathq://vocabulary/action/create-github-pull-request/v1",
+            "input_schema": "hathq://hat-github-operator/action-request/v1",
+            "output_schema": "hathq://hat-github-operator/action-receipt/v1"
+          }
+        ]
+      },
+      "handler": {
+        "kind": "hat-service",
+        "reference": "hat-github-operator"
+      }
+    },
+    {
+      "id": "hathq://vocabulary/action/dispatch-github-workflow/v1",
+      "input_schema": "hathq://hat-github-operator/action-request/v1",
+      "output_schema": "hathq://hat-github-operator/action-receipt/v1",
+      "context_plan": {
+        "id": "dispatch-github-workflow-context",
+        "selectors": [
+          {
+            "namespace": "github-connection",
+            "projection_schema": "hathq://hat-github-operator/connection/v1",
+            "required": true
+          }
+        ],
+        "unresolved_policy": "record-unresolved"
+      },
+      "reducer": {
+        "id": "dispatch-github-workflow-reducer",
+        "strategy": "typed-domain-event",
+        "event_schema": "hathq://hat-github-operator/action-event/v1",
+        "projection_schema": "hathq://hat-github-operator/action-receipt/v1",
+        "conflict_policy": "reject"
+      },
+      "procedure": {
+        "id": "dispatch-github-workflow-procedure",
+        "steps": [
+          {
+            "action_id": "hathq://vocabulary/action/dispatch-github-workflow/v1",
+            "input_schema": "hathq://hat-github-operator/action-request/v1",
+            "output_schema": "hathq://hat-github-operator/action-receipt/v1"
+          }
+        ]
+      },
+      "handler": {
+        "kind": "hat-service",
+        "reference": "hat-github-operator"
+      }
+    },
+    {
+      "id": "hathq://vocabulary/action/delete-github-repository/v1",
+      "input_schema": "hathq://hat-github-operator/action-request/v1",
+      "output_schema": "hathq://hat-github-operator/action-receipt/v1",
+      "context_plan": {
+        "id": "delete-repository-context",
+        "selectors": [
+          {
+            "namespace": "github-connection",
+            "projection_schema": "hathq://hat-github-operator/connection/v1",
+            "required": true
+          }
+        ],
+        "unresolved_policy": "record-unresolved"
+      },
+      "reducer": {
+        "id": "delete-repository-reducer",
+        "strategy": "typed-domain-event",
+        "event_schema": "hathq://hat-github-operator/action-event/v1",
+        "projection_schema": "hathq://hat-github-operator/action-receipt/v1",
+        "conflict_policy": "reject"
+      },
+      "procedure": {
+        "id": "delete-repository-procedure",
+        "steps": [
+          {
+            "action_id": "hathq://vocabulary/action/delete-github-repository/v1",
+            "input_schema": "hathq://hat-github-operator/action-request/v1",
+            "output_schema": "hathq://hat-github-operator/action-receipt/v1"
+          }
+        ]
+      },
+      "handler": {
+        "kind": "hat-service",
+        "reference": "hat-github-operator"
+      },
+      "effects": [
+        {
+          "kind": "update",
+          "surface_id": "github-repositories"
+        }
+      ]
+    }
+  ],
+  "catalog": {
+    "schema": "hathq://hat/semantic-catalog/v1",
+    "identity": {
+      "catalog_id": "hat-github-operator",
+      "version": 1,
+      "digest_sha256": "039aebeebbfc70c707576f00a69363622c8dfb5216010a481b9561f47bdd588d"
+    },
+    "owner_repository_id": "hat-github-operator",
+    "foundation": false,
+    "dependencies": [
+      {
+        "catalog_id": "hathq.foundation",
+        "version": 1,
+        "digest_sha256": "6b618dff030e551bafd6b1a70fe6daf71e2873de9c2230f4cf71e9ac9fbf2c0f"
+      },
+      {
+        "catalog_id": "hathq.communication",
+        "version": 1,
+        "digest_sha256": "94991adae8e6847fe853628a613e2d55d7c3a257ed0703dcf0500ef6ec8ff47a"
+      }
+    ],
+    "incompatibilities": [],
+    "terms": [
+      {
+        "reference": {
+          "catalog_id": "hat-github-operator",
+          "catalog_digest_sha256": "039aebeebbfc70c707576f00a69363622c8dfb5216010a481b9561f47bdd588d",
+          "term_id": "hathq://vocabulary/action/create-private-github-repository/v1",
+          "version": 1,
+          "definition_digest_sha256": "0710ff4b43861b4602ca0000955e39096db1df177e586b9dc15d365f48f253f4",
+          "kind": "action"
+        },
+        "wire_schema": "hathq://hat-github-operator/action-request/v1",
+        "semantic_icon": "action",
+        "dependencies": [],
+        "is_a": [],
+        "domain": [],
+        "range": []
+      },
+      {
+        "reference": {
+          "catalog_id": "hat-github-operator",
+          "catalog_digest_sha256": "039aebeebbfc70c707576f00a69363622c8dfb5216010a481b9561f47bdd588d",
+          "term_id": "hathq://vocabulary/action/push-github-repository-snapshot/v1",
+          "version": 1,
+          "definition_digest_sha256": "eeccdb18989e0c392030c63ccc1b1f93f6140f0f13d1564263be0e4bc02aed84",
+          "kind": "action"
+        },
+        "wire_schema": "hathq://hat-github-operator/action-request/v1",
+        "semantic_icon": "action",
+        "dependencies": [],
+        "is_a": [],
+        "domain": [],
+        "range": []
+      },
+      {
+        "reference": {
+          "catalog_id": "hat-github-operator",
+          "catalog_digest_sha256": "039aebeebbfc70c707576f00a69363622c8dfb5216010a481b9561f47bdd588d",
+          "term_id": "hathq://vocabulary/action/create-github-issue/v1",
+          "version": 1,
+          "definition_digest_sha256": "38390e00a12888cc46693a4ccbe7137a35f338e91dc194c9a31eccfcd974a7b6",
+          "kind": "action"
+        },
+        "wire_schema": "hathq://hat-github-operator/action-request/v1",
+        "semantic_icon": "action",
+        "dependencies": [],
+        "is_a": [],
+        "domain": [],
+        "range": []
+      },
+      {
+        "reference": {
+          "catalog_id": "hat-github-operator",
+          "catalog_digest_sha256": "039aebeebbfc70c707576f00a69363622c8dfb5216010a481b9561f47bdd588d",
+          "term_id": "hathq://vocabulary/action/create-github-pull-request/v1",
+          "version": 1,
+          "definition_digest_sha256": "7e137ec06b8cbb6dd8829363ff706bfa4f867e89d5cb7199c14e1a2319296f67",
+          "kind": "action"
+        },
+        "wire_schema": "hathq://hat-github-operator/action-request/v1",
+        "semantic_icon": "action",
+        "dependencies": [],
+        "is_a": [],
+        "domain": [],
+        "range": []
+      },
+      {
+        "reference": {
+          "catalog_id": "hat-github-operator",
+          "catalog_digest_sha256": "039aebeebbfc70c707576f00a69363622c8dfb5216010a481b9561f47bdd588d",
+          "term_id": "hathq://vocabulary/action/dispatch-github-workflow/v1",
+          "version": 1,
+          "definition_digest_sha256": "b28fcf9ec92870ae44f7abe6f5a98636c66aef7181b9e032a346e22d09c9160f",
+          "kind": "action"
+        },
+        "wire_schema": "hathq://hat-github-operator/action-request/v1",
+        "semantic_icon": "action",
+        "dependencies": [],
+        "is_a": [],
+        "domain": [],
+        "range": []
+      },
+      {
+        "reference": {
+          "catalog_id": "hat-github-operator",
+          "catalog_digest_sha256": "039aebeebbfc70c707576f00a69363622c8dfb5216010a481b9561f47bdd588d",
+          "term_id": "hathq://vocabulary/event/github-operation-completed/v1",
+          "version": 1,
+          "definition_digest_sha256": "c473d02ddc0f8f92d1a1e4fb54983bf0ab956b0e6078eedf1836b70cbe1c4c68",
+          "kind": "event-type"
+        },
+        "wire_schema": "hathq://hat-github-operator/action-receipt/v1",
+        "semantic_icon": "event",
+        "dependencies": [],
+        "is_a": [],
+        "domain": [],
+        "range": []
+      },
+      {
+        "reference": {
+          "catalog_id": "hat-github-operator",
+          "catalog_digest_sha256": "039aebeebbfc70c707576f00a69363622c8dfb5216010a481b9561f47bdd588d",
+          "term_id": "hathq://vocabulary/action/delete-github-repository/v1",
+          "version": 1,
+          "definition_digest_sha256": "e39bff3445fce07d841212833c3e266aba1469689dd415c95d98a93ae7694046",
+          "kind": "action"
+        },
+        "wire_schema": "hathq://hat-github-operator/action-request/v1",
+        "semantic_icon": "action",
+        "dependencies": [],
+        "is_a": [],
+        "domain": [],
+        "range": []
+      }
+    ],
+    "lexicalizations": [],
+    "frames": [
+      {
+        "frame_id": "create-private-repository-procedure-frame",
+        "definition_digest_sha256": "bad2ef345930a352fdf920a73d62aaa25a90f1d1ceabef4f42569d63021d50f5",
+        "predicate": {
+          "catalog_id": "hat-github-operator",
+          "catalog_digest_sha256": "039aebeebbfc70c707576f00a69363622c8dfb5216010a481b9561f47bdd588d",
+          "term_id": "hathq://vocabulary/action/create-private-github-repository/v1",
+          "version": 1,
+          "definition_digest_sha256": "0710ff4b43861b4602ca0000955e39096db1df177e586b9dc15d365f48f253f4",
+          "kind": "action"
+        },
+        "roles": [
+          {
+            "role": "actor",
+            "required": true,
+            "accepted_kinds": [
+              "entity-type"
+            ]
+          },
+          {
+            "role": "object",
+            "required": true,
+            "accepted_kinds": [
+              "concept"
+            ]
+          }
+        ]
+      },
+      {
+        "frame_id": "push-repository-snapshot-procedure-frame",
+        "definition_digest_sha256": "c11151757875e9a3a299a946be2015cbd77e18c5e12ccc350a911befbaf043e2",
+        "predicate": {
+          "catalog_id": "hat-github-operator",
+          "catalog_digest_sha256": "039aebeebbfc70c707576f00a69363622c8dfb5216010a481b9561f47bdd588d",
+          "term_id": "hathq://vocabulary/action/push-github-repository-snapshot/v1",
+          "version": 1,
+          "definition_digest_sha256": "eeccdb18989e0c392030c63ccc1b1f93f6140f0f13d1564263be0e4bc02aed84",
+          "kind": "action"
+        },
+        "roles": [
+          {
+            "role": "actor",
+            "required": true,
+            "accepted_kinds": [
+              "entity-type"
+            ]
+          },
+          {
+            "role": "object",
+            "required": true,
+            "accepted_kinds": [
+              "concept"
+            ]
+          }
+        ]
+      },
+      {
+        "frame_id": "create-github-issue-procedure-frame",
+        "definition_digest_sha256": "c475daac0f62d57b28b36f49cb67f4adb948fb5af545da634d26e757e126cbb7",
+        "predicate": {
+          "catalog_id": "hat-github-operator",
+          "catalog_digest_sha256": "039aebeebbfc70c707576f00a69363622c8dfb5216010a481b9561f47bdd588d",
+          "term_id": "hathq://vocabulary/action/create-github-issue/v1",
+          "version": 1,
+          "definition_digest_sha256": "38390e00a12888cc46693a4ccbe7137a35f338e91dc194c9a31eccfcd974a7b6",
+          "kind": "action"
+        },
+        "roles": [
+          {
+            "role": "actor",
+            "required": true,
+            "accepted_kinds": [
+              "entity-type"
+            ]
+          },
+          {
+            "role": "object",
+            "required": true,
+            "accepted_kinds": [
+              "concept"
+            ]
+          }
+        ]
+      },
+      {
+        "frame_id": "create-github-pull-request-procedure-frame",
+        "definition_digest_sha256": "4c4e9811a08a08a67c5ff295d841a1f1797df90c19deeb08afb2a9da69b21ca5",
+        "predicate": {
+          "catalog_id": "hat-github-operator",
+          "catalog_digest_sha256": "039aebeebbfc70c707576f00a69363622c8dfb5216010a481b9561f47bdd588d",
+          "term_id": "hathq://vocabulary/action/create-github-pull-request/v1",
+          "version": 1,
+          "definition_digest_sha256": "7e137ec06b8cbb6dd8829363ff706bfa4f867e89d5cb7199c14e1a2319296f67",
+          "kind": "action"
+        },
+        "roles": [
+          {
+            "role": "actor",
+            "required": true,
+            "accepted_kinds": [
+              "entity-type"
+            ]
+          },
+          {
+            "role": "object",
+            "required": true,
+            "accepted_kinds": [
+              "concept"
+            ]
+          }
+        ]
+      },
+      {
+        "frame_id": "dispatch-github-workflow-procedure-frame",
+        "definition_digest_sha256": "f11053efd9b2f66611811f8dac3e61fe00ca4a4b2bb7c563dbdc02c23e7661ac",
+        "predicate": {
+          "catalog_id": "hat-github-operator",
+          "catalog_digest_sha256": "039aebeebbfc70c707576f00a69363622c8dfb5216010a481b9561f47bdd588d",
+          "term_id": "hathq://vocabulary/action/dispatch-github-workflow/v1",
+          "version": 1,
+          "definition_digest_sha256": "b28fcf9ec92870ae44f7abe6f5a98636c66aef7181b9e032a346e22d09c9160f",
+          "kind": "action"
+        },
+        "roles": [
+          {
+            "role": "actor",
+            "required": true,
+            "accepted_kinds": [
+              "entity-type"
+            ]
+          },
+          {
+            "role": "object",
+            "required": true,
+            "accepted_kinds": [
+              "concept"
+            ]
+          }
+        ]
+      },
+      {
+        "frame_id": "delete-repository-procedure-frame",
+        "definition_digest_sha256": "6ecde3fbd9757f1e90767321d294a8230de807f28a602734607d8ef9b83fa46e",
+        "predicate": {
+          "catalog_id": "hat-github-operator",
+          "catalog_digest_sha256": "039aebeebbfc70c707576f00a69363622c8dfb5216010a481b9561f47bdd588d",
+          "term_id": "hathq://vocabulary/action/delete-github-repository/v1",
+          "version": 1,
+          "definition_digest_sha256": "e39bff3445fce07d841212833c3e266aba1469689dd415c95d98a93ae7694046",
+          "kind": "action"
+        },
+        "roles": [
+          {
+            "role": "actor",
+            "required": true,
+            "accepted_kinds": [
+              "entity-type"
+            ]
+          },
+          {
+            "role": "object",
+            "required": true,
+            "accepted_kinds": [
+              "concept"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
