@@ -1,14 +1,28 @@
-# GitHub Operator HAT
+# hat-github-operator
 
-An explicitly installed GitHub integration HAT. Its declarations distinguish private repository creation, immutable source snapshot push, Issue and Pull Request creation, workflow dispatch, and private repository deletion permissions.
+Turn an explicitly authorized role invocation into a supported GitHub operation.
 
-The package validates HAT identity, binding, runtime grant, permission, and expiry, then converts an authorized invocation into the declared `zixcel://github/api-request/v1` contract. The declared Zixcel dependency performs the API request.
+## What you can do
 
-Grant signatures are verified through the `HatGrantVerifier` port. Connection secret resolution and transport remain with their configured providers; credentials are not package content. Deletion requires an exact grant with the expected repository ID and backup declaration. Public visibility changes, force push, and GitHub permission-setting changes are outside the implemented operation set.
+- Validate exact package, binding, target and permission.
+- Request private repository creation, snapshot push or declared issue/PR operations.
 
-## Responsibilities
+## Current scope
 
-- Bound operations by the installed HAT package permission set.
-- Match package, binding, target, time, and permission references exactly.
-- Convert validated invocations to the provider API request contract.
-- Receive provider results through the declared interface.
+Deletion requires an exact grant and backup declaration. Public visibility changes, force pushes and permission-setting changes are outside the implemented operation set.
+
+Package distribution is not activated by this documentation. Use the checked-in source and the declared dependency versions; published availability must be verified separately.
+
+## Getting started
+
+Install Rust 1.97 or newer and make the declared dependencies available. Use the configured private registry when a dependency is not distributed publicly. Run from this repository:
+
+```sh
+cargo test --locked
+```
+
+## Documentation and source
+
+[Usage guide](docs/getting-started.md)
+
+[Implementation and public interfaces](src) · [Verification cases](tests) · [Contributing](CONTRIBUTING.md) · [Security reporting](SECURITY.md) · [License](LICENSE) · [Attribution notices](NOTICE)
