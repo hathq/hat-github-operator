@@ -63,9 +63,10 @@ fn finish_registered(
     if registration.worker_id != required(args, "worker-id")? || registration.revision == 0 {
         return Err("worker registration response differs from the requested owner".into());
     }
-    let result = catch_unwind(AssertUnwindSafe(|| match wait_for_claim(args, common)? {
-        Some(lease) => process(args, common, control, &lease),
-        None => {
+    let result = catch_unwind(AssertUnwindSafe(|| {
+        if let Some(lease) = wait_for_claim(args, common)? {
+            process(args, common, control, &lease)
+        } else {
             println!("{{\"processed\":false}}");
             Ok(())
         }
