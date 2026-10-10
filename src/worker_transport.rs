@@ -1,9 +1,9 @@
-use crowsi_provider_egress_contracts::{
+use serde::de::DeserializeOwned;
+use std::collections::BTreeMap;
+use zixcel_github_egress_contracts::{
     GitHubEgressCommandV1, GitHubEgressMode, GitHubEgressReceiptV1, GitHubVerificationReceiptV1,
     validate_github_command, validate_github_egress_receipt, validate_github_verification_receipt,
 };
-use serde::de::DeserializeOwned;
-use std::collections::BTreeMap;
 
 use crate::worker_io::{message, required, run_json_process};
 
@@ -39,8 +39,8 @@ fn exchange<T: DeserializeOwned>(
 ) -> Result<T, String> {
     let input = serde_json::to_vec(command).map_err(message)?;
     let output = run_json_process(
-        required(args, "crowsi-github-transport")?,
-        required(args, "crowsi-transport-config")?,
+        required(args, "zixcel-github-transport")?,
+        required(args, "zixcel-transport-config")?,
         &input,
     )?;
     serde_json::from_slice(&output).map_err(message)

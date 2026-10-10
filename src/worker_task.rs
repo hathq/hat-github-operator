@@ -1,6 +1,3 @@
-use crowsi_provider_egress_contracts::{
-    GitHubAuthorizationV1, GitHubEgressCommandV1, GitHubEgressMode,
-};
 use hat_github_operator::{
     AdapterError, GitHubOperation, HatGitHubGrant, HatGitHubInvocation, HatGrantVerifier,
     RemoteExpectation, translate_authorized_at,
@@ -15,6 +12,9 @@ use std::fs;
 use std::path::Path;
 use std::time::{SystemTime, UNIX_EPOCH};
 use zixcel_github::{GitHubAction, GitHubApiRequest, GitHubRemoteExpectation};
+use zixcel_github_egress_contracts::{
+    GitHubAuthorizationV1, GitHubEgressCommandV1, GitHubEgressMode,
+};
 
 use crate::worker::Lease;
 use crate::worker_io::{canonical_directory, message, path, required, run_hatter, write_document};
