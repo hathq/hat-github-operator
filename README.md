@@ -36,3 +36,5 @@ authorization must name the exact `zixcel-github-transport` audience; no
 credential, implicit permission, or provider mutation is supplied by this worker.
 
 [OSS responsibility and source completion](docs/oss-source-contract.md) defines the supported package boundary and required acceptance. It does not declare unexecuted source, distribution or production checks complete.
+
+Dependency updates: [repository policy](docs/dependency-updates.md).
