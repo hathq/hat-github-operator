@@ -357,7 +357,7 @@
     "identity": {
       "catalog_id": "hat-github-operator",
       "version": 1,
-      "digest_sha256": "039aebeebbfc70c707576f00a69363622c8dfb5216010a481b9561f47bdd588d"
+      "digest_sha256": "865140abacd2668e1a8053b8b07832c1d7eb75c0c80ef0bde35fa12fa10f59df"
     },
     "owner_repository_id": "hat-github-operator",
     "foundation": false,
@@ -365,12 +365,12 @@
       {
         "catalog_id": "hathq.foundation",
         "version": 1,
-        "digest_sha256": "6b618dff030e551bafd6b1a70fe6daf71e2873de9c2230f4cf71e9ac9fbf2c0f"
+        "digest_sha256": "7ed387a86fe00a320784c181a2128da856ccb3e5e3930040ca39d9f5b627a465"
       },
       {
         "catalog_id": "hathq.communication",
         "version": 1,
-        "digest_sha256": "94991adae8e6847fe853628a613e2d55d7c3a257ed0703dcf0500ef6ec8ff47a"
+        "digest_sha256": "4bfafe8c5864f06b2f2eaea44c947d9bfe375165905a8a871e2d5bcde2cee932"
       }
     ],
     "incompatibilities": [],
@@ -378,7 +378,7 @@
       {
         "reference": {
           "catalog_id": "hat-github-operator",
-          "catalog_digest_sha256": "039aebeebbfc70c707576f00a69363622c8dfb5216010a481b9561f47bdd588d",
+          "catalog_digest_sha256": "865140abacd2668e1a8053b8b07832c1d7eb75c0c80ef0bde35fa12fa10f59df",
           "term_id": "hathq://vocabulary/action/create-private-github-repository/v1",
           "version": 1,
           "definition_digest_sha256": "0710ff4b43861b4602ca0000955e39096db1df177e586b9dc15d365f48f253f4",
@@ -394,7 +394,7 @@
       {
         "reference": {
           "catalog_id": "hat-github-operator",
-          "catalog_digest_sha256": "039aebeebbfc70c707576f00a69363622c8dfb5216010a481b9561f47bdd588d",
+          "catalog_digest_sha256": "865140abacd2668e1a8053b8b07832c1d7eb75c0c80ef0bde35fa12fa10f59df",
           "term_id": "hathq://vocabulary/action/push-github-repository-snapshot/v1",
           "version": 1,
           "definition_digest_sha256": "eeccdb18989e0c392030c63ccc1b1f93f6140f0f13d1564263be0e4bc02aed84",
@@ -410,7 +410,7 @@
       {
         "reference": {
           "catalog_id": "hat-github-operator",
-          "catalog_digest_sha256": "039aebeebbfc70c707576f00a69363622c8dfb5216010a481b9561f47bdd588d",
+          "catalog_digest_sha256": "865140abacd2668e1a8053b8b07832c1d7eb75c0c80ef0bde35fa12fa10f59df",
           "term_id": "hathq://vocabulary/action/create-github-issue/v1",
           "version": 1,
           "definition_digest_sha256": "38390e00a12888cc46693a4ccbe7137a35f338e91dc194c9a31eccfcd974a7b6",
@@ -426,7 +426,7 @@
       {
         "reference": {
           "catalog_id": "hat-github-operator",
-          "catalog_digest_sha256": "039aebeebbfc70c707576f00a69363622c8dfb5216010a481b9561f47bdd588d",
+          "catalog_digest_sha256": "865140abacd2668e1a8053b8b07832c1d7eb75c0c80ef0bde35fa12fa10f59df",
           "term_id": "hathq://vocabulary/action/create-github-pull-request/v1",
           "version": 1,
           "definition_digest_sha256": "7e137ec06b8cbb6dd8829363ff706bfa4f867e89d5cb7199c14e1a2319296f67",
@@ -442,7 +442,7 @@
       {
         "reference": {
           "catalog_id": "hat-github-operator",
-          "catalog_digest_sha256": "039aebeebbfc70c707576f00a69363622c8dfb5216010a481b9561f47bdd588d",
+          "catalog_digest_sha256": "865140abacd2668e1a8053b8b07832c1d7eb75c0c80ef0bde35fa12fa10f59df",
           "term_id": "hathq://vocabulary/action/dispatch-github-workflow/v1",
           "version": 1,
           "definition_digest_sha256": "b28fcf9ec92870ae44f7abe6f5a98636c66aef7181b9e032a346e22d09c9160f",
@@ -458,7 +458,7 @@
       {
         "reference": {
           "catalog_id": "hat-github-operator",
-          "catalog_digest_sha256": "039aebeebbfc70c707576f00a69363622c8dfb5216010a481b9561f47bdd588d",
+          "catalog_digest_sha256": "865140abacd2668e1a8053b8b07832c1d7eb75c0c80ef0bde35fa12fa10f59df",
           "term_id": "hathq://vocabulary/event/github-operation-completed/v1",
           "version": 1,
           "definition_digest_sha256": "c473d02ddc0f8f92d1a1e4fb54983bf0ab956b0e6078eedf1836b70cbe1c4c68",
@@ -474,7 +474,7 @@
       {
         "reference": {
           "catalog_id": "hat-github-operator",
-          "catalog_digest_sha256": "039aebeebbfc70c707576f00a69363622c8dfb5216010a481b9561f47bdd588d",
+          "catalog_digest_sha256": "865140abacd2668e1a8053b8b07832c1d7eb75c0c80ef0bde35fa12fa10f59df",
           "term_id": "hathq://vocabulary/action/delete-github-repository/v1",
           "version": 1,
           "definition_digest_sha256": "e39bff3445fce07d841212833c3e266aba1469689dd415c95d98a93ae7694046",
@@ -488,176 +488,6 @@
         "range": []
       }
     ],
-    "lexicalizations": [],
-    "frames": [
-      {
-        "frame_id": "create-private-repository-procedure-frame",
-        "definition_digest_sha256": "bad2ef345930a352fdf920a73d62aaa25a90f1d1ceabef4f42569d63021d50f5",
-        "predicate": {
-          "catalog_id": "hat-github-operator",
-          "catalog_digest_sha256": "039aebeebbfc70c707576f00a69363622c8dfb5216010a481b9561f47bdd588d",
-          "term_id": "hathq://vocabulary/action/create-private-github-repository/v1",
-          "version": 1,
-          "definition_digest_sha256": "0710ff4b43861b4602ca0000955e39096db1df177e586b9dc15d365f48f253f4",
-          "kind": "action"
-        },
-        "roles": [
-          {
-            "role": "actor",
-            "required": true,
-            "accepted_kinds": [
-              "entity-type"
-            ]
-          },
-          {
-            "role": "object",
-            "required": true,
-            "accepted_kinds": [
-              "concept"
-            ]
-          }
-        ]
-      },
-      {
-        "frame_id": "push-repository-snapshot-procedure-frame",
-        "definition_digest_sha256": "c11151757875e9a3a299a946be2015cbd77e18c5e12ccc350a911befbaf043e2",
-        "predicate": {
-          "catalog_id": "hat-github-operator",
-          "catalog_digest_sha256": "039aebeebbfc70c707576f00a69363622c8dfb5216010a481b9561f47bdd588d",
-          "term_id": "hathq://vocabulary/action/push-github-repository-snapshot/v1",
-          "version": 1,
-          "definition_digest_sha256": "eeccdb18989e0c392030c63ccc1b1f93f6140f0f13d1564263be0e4bc02aed84",
-          "kind": "action"
-        },
-        "roles": [
-          {
-            "role": "actor",
-            "required": true,
-            "accepted_kinds": [
-              "entity-type"
-            ]
-          },
-          {
-            "role": "object",
-            "required": true,
-            "accepted_kinds": [
-              "concept"
-            ]
-          }
-        ]
-      },
-      {
-        "frame_id": "create-github-issue-procedure-frame",
-        "definition_digest_sha256": "c475daac0f62d57b28b36f49cb67f4adb948fb5af545da634d26e757e126cbb7",
-        "predicate": {
-          "catalog_id": "hat-github-operator",
-          "catalog_digest_sha256": "039aebeebbfc70c707576f00a69363622c8dfb5216010a481b9561f47bdd588d",
-          "term_id": "hathq://vocabulary/action/create-github-issue/v1",
-          "version": 1,
-          "definition_digest_sha256": "38390e00a12888cc46693a4ccbe7137a35f338e91dc194c9a31eccfcd974a7b6",
-          "kind": "action"
-        },
-        "roles": [
-          {
-            "role": "actor",
-            "required": true,
-            "accepted_kinds": [
-              "entity-type"
-            ]
-          },
-          {
-            "role": "object",
-            "required": true,
-            "accepted_kinds": [
-              "concept"
-            ]
-          }
-        ]
-      },
-      {
-        "frame_id": "create-github-pull-request-procedure-frame",
-        "definition_digest_sha256": "4c4e9811a08a08a67c5ff295d841a1f1797df90c19deeb08afb2a9da69b21ca5",
-        "predicate": {
-          "catalog_id": "hat-github-operator",
-          "catalog_digest_sha256": "039aebeebbfc70c707576f00a69363622c8dfb5216010a481b9561f47bdd588d",
-          "term_id": "hathq://vocabulary/action/create-github-pull-request/v1",
-          "version": 1,
-          "definition_digest_sha256": "7e137ec06b8cbb6dd8829363ff706bfa4f867e89d5cb7199c14e1a2319296f67",
-          "kind": "action"
-        },
-        "roles": [
-          {
-            "role": "actor",
-            "required": true,
-            "accepted_kinds": [
-              "entity-type"
-            ]
-          },
-          {
-            "role": "object",
-            "required": true,
-            "accepted_kinds": [
-              "concept"
-            ]
-          }
-        ]
-      },
-      {
-        "frame_id": "dispatch-github-workflow-procedure-frame",
-        "definition_digest_sha256": "f11053efd9b2f66611811f8dac3e61fe00ca4a4b2bb7c563dbdc02c23e7661ac",
-        "predicate": {
-          "catalog_id": "hat-github-operator",
-          "catalog_digest_sha256": "039aebeebbfc70c707576f00a69363622c8dfb5216010a481b9561f47bdd588d",
-          "term_id": "hathq://vocabulary/action/dispatch-github-workflow/v1",
-          "version": 1,
-          "definition_digest_sha256": "b28fcf9ec92870ae44f7abe6f5a98636c66aef7181b9e032a346e22d09c9160f",
-          "kind": "action"
-        },
-        "roles": [
-          {
-            "role": "actor",
-            "required": true,
-            "accepted_kinds": [
-              "entity-type"
-            ]
-          },
-          {
-            "role": "object",
-            "required": true,
-            "accepted_kinds": [
-              "concept"
-            ]
-          }
-        ]
-      },
-      {
-        "frame_id": "delete-repository-procedure-frame",
-        "definition_digest_sha256": "6ecde3fbd9757f1e90767321d294a8230de807f28a602734607d8ef9b83fa46e",
-        "predicate": {
-          "catalog_id": "hat-github-operator",
-          "catalog_digest_sha256": "039aebeebbfc70c707576f00a69363622c8dfb5216010a481b9561f47bdd588d",
-          "term_id": "hathq://vocabulary/action/delete-github-repository/v1",
-          "version": 1,
-          "definition_digest_sha256": "e39bff3445fce07d841212833c3e266aba1469689dd415c95d98a93ae7694046",
-          "kind": "action"
-        },
-        "roles": [
-          {
-            "role": "actor",
-            "required": true,
-            "accepted_kinds": [
-              "entity-type"
-            ]
-          },
-          {
-            "role": "object",
-            "required": true,
-            "accepted_kinds": [
-              "concept"
-            ]
-          }
-        ]
-      }
-    ]
+    "lexicalizations": []
   }
 }
